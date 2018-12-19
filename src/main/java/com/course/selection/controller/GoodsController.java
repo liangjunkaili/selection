@@ -25,7 +25,7 @@ public class GoodsController {
     public List<Goods> getGoods(){
         Map<String,Object> map = new HashMap<>();
         List<Goods> goods = goodsService.queryGoods(map);
-        System.out.println(goods.get(0).getIntro());
+//        System.out.println(goods.get(0).getIntro());
         return goods;
     }
 }
