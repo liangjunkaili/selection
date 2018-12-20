@@ -1,5 +1,9 @@
 package com.course.selection.bean;
 
+import lombok.*;
+
+import java.io.Serializable;
+
 /**
  * @ClassName Goods
  * @Description TODO
@@ -7,6 +11,11 @@ package com.course.selection.bean;
  * @Date 2018/12/17 7:12 AM
  * @Version 1.0
  **/
+@Data
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Goods {
     private int id;
     private String img;

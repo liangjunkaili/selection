@@ -1,7 +1,9 @@
 package com.course.selection.controller;
 
 import com.course.selection.bean.Goods;
+import com.course.selection.dto.Result;
 import com.course.selection.service.GoodsService;
+import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +24,10 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
     @RequestMapping("getGoods")
-    public List<Goods> getGoods(){
+    public Result getGoods(){
         Map<String,Object> map = new HashMap<>();
         List<Goods> goods = goodsService.queryGoods(map);
-//        System.out.println(goods.get(0).getIntro());
-        return goods;
+        Goods goods1 = Goods.builder().title(goods.get(0).getTitle()).build();
+        return ResultUtil.success(goods1);
     }
 }
