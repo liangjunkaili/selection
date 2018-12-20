@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,33 @@ import java.util.Map;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
+
     @RequestMapping("getGoods")
-    public Result getGoods(){
-        Map<String,Object> map = new HashMap<>();
+    public Result getGoods() {
+        Map<String, Object> map = new HashMap<>();
         List<Goods> goods = goodsService.queryGoods(map);
-        Goods goods1 = Goods.builder().title(goods.get(0).getTitle()).build();
-        return ResultUtil.success(goods1);
+        return ResultUtil.success(goods);
+    }
+
+    @RequestMapping("getGoodById")
+    public Result getGoodById(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        List<Goods> goods = goodsService.queryGoods(map);
+        return ResultUtil.success(goods.get(0));
+    }
+
+    /**
+     * 领取优惠券
+     * @param request
+     * @return
+     */
+    @RequestMapping("getCoupons")
+    public Result getCoupons(HttpServletRequest request) {
+        String uid = request.getParameter("uid");
+        String cid = request.getParameter("cid");
+        Map<String, Object> map = new HashMap<>();
+        return ResultUtil.success(null);
     }
 }

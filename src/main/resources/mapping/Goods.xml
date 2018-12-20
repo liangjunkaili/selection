@@ -4,12 +4,22 @@
     <resultMap id="goodsRT" type="com.course.selection.bean.Goods">
         <result column="id" property="id" jdbcType="INTEGER"/>
         <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="oprice" property="oprice" jdbcType="INTEGER"/>
+        <result column="flag" property="flag" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="intro" property="intro" jdbcType="VARCHAR"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="img1" property="img1" jdbcType="VARCHAR"/>
+        <result column="img2" property="img2" jdbcType="VARCHAR"/>
+        <result column="img3" property="img3" jdbcType="VARCHAR"/>
         <result column="label" property="label" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="queryGoods" resultMap="goodsRT" parameterType="java.util.Map">
         select * from goods
+        <where>
+            <if test="id !=null and id != '' ">
+                id = #{id}
+            </if>
+        </where>
     </select>
 </mapper>

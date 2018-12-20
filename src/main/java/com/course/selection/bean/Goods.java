@@ -19,6 +19,9 @@ import java.io.Serializable;
 public class Goods {
     private int id;
     private String img;
+    private String img1;
+    private String img2;
+    private String img3;
     private String title;
     private String intro;
     private String label;
@@ -26,5 +29,7 @@ public class Goods {
      * 单位为分，都为整数
      */
     private int price;
-
+    private int flag;
+    private int num;
+    private int weight;//轮播图的权重
 }
