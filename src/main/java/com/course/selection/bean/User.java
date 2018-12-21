@@ -32,7 +32,6 @@ public class User {
     private String city;//城市
     private String province;//省份
     private String country;//国家
-    private Integer shareId;//被哪个用户邀请进来的
     private Integer income;//累计收益
     private Integer orders;//推广订单数
     private String poster;//我的海报

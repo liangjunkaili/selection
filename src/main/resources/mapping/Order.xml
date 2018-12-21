@@ -21,4 +21,9 @@
             </if>
         </where>
     </select>
+
+    <select id="findByOid" resultMap="orderRT">
+        select * from `order` where
+                oid = #{oid}
+    </select>
 </mapper>

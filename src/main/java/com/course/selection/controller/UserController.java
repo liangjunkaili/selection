@@ -2,6 +2,7 @@ package com.course.selection.controller;
 
 import com.course.selection.dto.Result;
 import com.course.selection.enums.ResultEnum;
+import com.course.selection.service.OrderPeopleListService;
 import com.course.selection.service.OrderService;
 import com.course.selection.service.UserCouponService;
 import com.course.selection.service.UserService;
@@ -32,6 +33,8 @@ public class UserController {
     private UserCouponService userCouponService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderPeopleListService orderPeopleListService;
 
     @ApiOperation("用户登录")
     @PostMapping("login")
@@ -71,7 +74,29 @@ public class UserController {
     public Result getMyPoster(
             @RequestParam(value = "uid",required = false) Integer uid
     ){
-        return orderService.getMyOrders(uid);
+        return orderPeopleListService.getMyPoster(uid);
+    }
+
+    @ApiOperation("查看订单下的测试人员")
+    @PostMapping("getPeople")
+    public Result getPeople(
+            @RequestParam(value = "oid",required = false) Integer oid
+    ){
+        return orderPeopleListService.getPeople(oid);
+    }
+
+    @ApiOperation("添加测试人员")
+    @PostMapping("addPeople")
+    public Result addPeople(
+            @RequestParam(value = "oid",required = true) Integer oid,
+            @RequestParam(value = "name",required = false) String name,
+            @RequestParam(value = "gender",required = false) Integer gender,
+            @RequestParam(value = "phone",required = false) String phone,
+            @RequestParam(value = "birthdayTime",required = false) String birthdayTime,
+            @RequestParam(value = "address",required = false) String address
+    ){
+        log.info("oid:{}",oid);
+        return orderPeopleListService.addPeople(oid,name,gender,phone,birthdayTime,address);
     }
 
 }

@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface OrderDao {
     List<Order> findByUid(@Param("uid") Integer uid);
+
+    Order findByOid(@Param("oid") Integer oid);
 }

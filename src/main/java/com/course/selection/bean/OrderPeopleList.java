@@ -18,6 +18,7 @@ public class OrderPeopleList {
     private Integer id;
     private Integer oid;
     private String name;
+    private String title;
     private Integer gender;
     private String phone;
     private String birthdayTime;
@@ -30,4 +31,5 @@ public class OrderPeopleList {
      * 讲解链接
      */
     private String eurl;
+    private Integer state;
 }

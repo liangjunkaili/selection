@@ -1,8 +1,11 @@
 package com.course.selection.service.impl;
 
+import com.course.selection.bean.Goods;
 import com.course.selection.bean.User;
 import com.course.selection.config.App;
+import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.UserDao;
+import com.course.selection.dto.GoodDto;
 import com.course.selection.dto.Result;
 import com.course.selection.dto.UserDto;
 import com.course.selection.enums.ResultEnum;
@@ -18,7 +21,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +38,8 @@ public class UserServiceImpl implements UserService {
 //    private TokenService tokenService;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private GoodsDao goodsDao;
     private static final String ERR_MSG = "errmsg";
     @Override
     public Result login(String code, String encryptedData, String iv, String channel, String ip, Integer shareId)throws IOException {
@@ -52,7 +59,8 @@ public class UserServiceImpl implements UserService {
             }
             //查询该用户是否存在
             User user = userDao.findOneByOpenId(openId);
-            if(iv!=null){
+            log.info("iv:{}",iv);
+            if(iv!=null&&iv!=""){
                 //解密数据
                 String userData = AESUtil.aesDecryptByBytes(encryptedData.replaceAll(StringUtil.BLANK_TEXT, StringUtil.PLUS),
                         sessionKey.replaceAll(StringUtil.BLANK_TEXT, StringUtil.PLUS),
@@ -79,6 +87,19 @@ public class UserServiceImpl implements UserService {
             }
             //生成用户token
 //            String token = tokenService.generateToken(user.getUid());
+            //查询首页信息
+            List<Goods> goods = goodsDao.queryGoods(new HashMap<>());
+            List<GoodDto> goodDtos = new ArrayList<>();
+            goods.forEach(good -> {
+                GoodDto goodDto = GoodDto.builder()
+                        .img(good.getImg())
+                        .intro(good.getIntro())
+                        .label(good.getLabel())
+                        .price(good.getPrice())
+                        .title(good.getTitle())
+                        .build();
+                goodDtos.add(goodDto);
+            });
             //返回用户信息
             UserDto userDTO = UserDto.builder()
                     .avatar(user.getAvatar())
@@ -87,6 +108,7 @@ public class UserServiceImpl implements UserService {
                     .uid(user.getUid())
                     .income(user.getIncome())
                     .poster(user.getPoster())
+                    .goodDtos(goodDtos)
                     .build();
             return ResultUtil.success(userDTO);
         }
@@ -106,10 +128,9 @@ public class UserServiceImpl implements UserService {
                 .city((String) userMap.get("city"))
                 .province((String) userMap.get("province"))
                 .country((String) userMap.get("country"))
-                .shareId(shareId)
                 .income(0)
                 .orders(0)
-                .poster("")
+                .poster("null")
                 .build();
     }
     private Map<String, String> loginMap(String code) {

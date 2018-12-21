@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 
 @Data
 @ToString
@@ -36,4 +38,8 @@ public class UserDto {
      * 用户海报
      */
     private String poster;
+    /**
+     * 商品展示
+     */
+    private List<GoodDto> goodDtos;
 }

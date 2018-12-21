@@ -10,7 +10,6 @@
         <result column="channel" property="channel" jdbcType="VARCHAR"/>
         <result column="reg_time" property="regTime" jdbcType="TIMESTAMP"/>
         <result column="active_time" property="activeTime" jdbcType="TIMESTAMP"/>
-        <result column="share_id" property="shareId" jdbcType="INTEGER"/>
         <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
         <result column="ip" property="ip" jdbcType="VARCHAR"/>
         <result column="city" property="city" jdbcType="VARCHAR"/>
@@ -20,7 +19,7 @@
         <result column="orders" property="orders" jdbcType="INTEGER"/>
         <result column="poster" property="poster" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="findOneByOpenId" resultMap="userResultMap" >
+    <select id="findOneByOpenId" resultMap="userResultMap">
         select * from `user` where `open_id` = #{openId}
     </select>
 
@@ -47,38 +46,37 @@ WHERE `uid` = #{uid} ;
     <insert id="insert" useGeneratedKeys="true" keyProperty="user.uid">
         INSERT INTO user
                         (`uid`,
-                          `nickname`,
-                          `avatar`,
-                          `gender`,
-                          `reg_time`,
-                          `open_id`,
-                          `union_id`,
-                          `channel`,
-                          `ip`,
-                          `city`,
-                          `province`,
-                          `country`,
-                          `share_id`,
-                          `income`,
-                          `orders`,
-                          `poster`
-                          )
+  `open_id`,
+  `union_id`,
+  `nickname`,
+  `avatar`,
+  `gender`,
+  `reg_time`,
+  `active_time`,
+  `channel`,
+  `ip`,
+  `city`,
+  `province`,
+  `country`,
+  `income`,
+  `orders`,
+  `poster` )
         VALUES (#{user.uid,jdbcType=INTEGER},
+                #{user.openId,jdbcType=VARCHAR},
+                #{user.unionId,jdbcType=VARCHAR},
                 #{user.nickname,jdbcType=VARCHAR},
                 #{user.avatar,jdbcType=VARCHAR},
                 #{user.gender,jdbcType=INTEGER},
                 #{user.regTime,jdbcType=TIMESTAMP},
-                #{user.openId,jdbcType=VARCHAR},
-                #{user.unionId,jdbcType=VARCHAR},
+                #{user.activeTime,jdbcType=TIMESTAMP},
                 #{user.channel,jdbcType=VARCHAR},
                 #{user.ip,jdbcType=VARCHAR},
                 #{user.city,jdbcType=VARCHAR},
                 #{user.province,jdbcType=VARCHAR},
                 #{user.country,jdbcType=VARCHAR},
-                #{user.shareId,jdbcType=INTEGER},
                 #{user.income,jdbcType=INTEGER},
                 #{user.orders,jdbcType=INTEGER},
-                #{user.poster,jdbcType=VARCHAR}
-                on  DUPLICATE key update uid=#{user.uid,jdbcType=INTEGER}
+                #{user.poster,jdbcType=VARCHAR})
+ on  DUPLICATE key update uid=#{user.uid,jdbcType=INTEGER}
     </insert>
 </mapper>

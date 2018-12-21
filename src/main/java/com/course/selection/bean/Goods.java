@@ -56,6 +56,7 @@ public class Goods {
      * 单位为分，都为整数
      */
     private int price;
+    private int oprice;
     /**
      * 优惠券
      */
