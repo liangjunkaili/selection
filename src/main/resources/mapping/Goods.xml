@@ -13,6 +13,11 @@
         <result column="img2" property="img2" jdbcType="VARCHAR"/>
         <result column="img3" property="img3" jdbcType="VARCHAR"/>
         <result column="label" property="label" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="icard" property="icard" jdbcType="VARCHAR"/>
+        <result column="bamount" property="bamount" jdbcType="INTEGER"/>
     </resultMap>
     <select id="queryGoods" resultMap="goodsRT" parameterType="java.util.Map">
         select * from goods

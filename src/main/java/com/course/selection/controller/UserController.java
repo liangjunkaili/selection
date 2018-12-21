@@ -2,6 +2,8 @@ package com.course.selection.controller;
 
 import com.course.selection.dto.Result;
 import com.course.selection.enums.ResultEnum;
+import com.course.selection.service.OrderService;
+import com.course.selection.service.UserCouponService;
 import com.course.selection.service.UserService;
 import com.course.selection.util.HttpUtil;
 import com.course.selection.util.ResultUtil;
@@ -26,6 +28,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserCouponService userCouponService;
+    @Autowired
+    private OrderService orderService;
 
     @ApiOperation("用户登录")
     @PostMapping("login")
@@ -43,4 +49,29 @@ public class UserController {
         Result result = userService.login(code, encryptedData, iv, channel, ip, uid);
         return result;
     }
+
+    @ApiOperation("我的优惠券")
+    @PostMapping("getMyCoupons")
+    public Result getMyCoupons(
+            @RequestParam(value = "uid",required = false) Integer uid
+    ){
+        return userCouponService.getMyCoupons(uid);
+    }
+
+    @ApiOperation("我的订单")
+    @PostMapping("getMyOrders")
+    public Result getMyOrders(
+            @RequestParam(value = "uid",required = false) Integer uid
+    ){
+        return orderService.getMyOrders(uid);
+    }
+
+    @ApiOperation("我的报告")
+    @PostMapping("getMyPoster")
+    public Result getMyPoster(
+            @RequestParam(value = "uid",required = false) Integer uid
+    ){
+        return orderService.getMyOrders(uid);
+    }
+
 }

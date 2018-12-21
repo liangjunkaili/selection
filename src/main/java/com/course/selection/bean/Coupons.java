@@ -17,8 +17,9 @@ import lombok.*;
 public class Coupons {
     private int id;
     private int price;
-    private int reason;
+    private String reason;
     private String type;
     private int num;
+    private int state;
     private int vaildTime;
 }
