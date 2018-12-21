@@ -118,6 +118,7 @@ public class UserServiceImpl implements UserService {
         loginMap.put("secret", App.APP_SECRET);
         loginMap.put("js_code", code);
         loginMap.put("grant_type", "authorization_code");
+        log.info("loginMap:{}",loginMap);
         return loginMap;
     }
 }
