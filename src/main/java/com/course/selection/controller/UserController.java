@@ -99,4 +99,17 @@ public class UserController {
         return orderPeopleListService.addPeople(oid,name,gender,phone,birthdayTime,address);
     }
 
+    @ApiOperation("修改测试人员")
+    @PostMapping("updatePeople")
+    public Result updatePeople(
+            @RequestParam(value = "id",required = true) Integer id,
+            @RequestParam(value = "name",required = false) String name,
+            @RequestParam(value = "gender",required = false) Integer gender,
+            @RequestParam(value = "phone",required = false) String phone,
+            @RequestParam(value = "birthdayTime",required = false) String birthdayTime,
+            @RequestParam(value = "address",required = false) String address
+    ){
+        log.info("id:{}",id);
+        return orderPeopleListService.updatePeople(id,name,gender,phone,birthdayTime,address);
+    }
 }

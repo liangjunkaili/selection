@@ -48,4 +48,18 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
         List<OrderPeopleList> orderPeopleLists = orderPeopleListDao.findByOid(oid);
         return ResultUtil.success(orderPeopleLists);
     }
+
+    @Override
+    public Result updatePeople(Integer id, String name, Integer gender, String phone, String birthdayTime, String address) {
+        OrderPeopleList orderPeopleList = OrderPeopleList.builder()
+                .address(address)
+                .birthdayTime(birthdayTime)
+                .gender(gender)
+                .name(name)
+                .phone(phone)
+                .id(id)
+                .build();
+        orderPeopleListDao.update(orderPeopleList);
+        return ResultUtil.success();
+    }
 }

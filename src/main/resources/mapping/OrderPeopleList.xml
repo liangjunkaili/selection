@@ -49,8 +49,21 @@ VALUES
     #{orderPeopleList.eurl,jdbcType=VARCHAR},
     #{orderPeopleList.state,jdbcType=INTEGER},
      #{orderPeopleList.title,jdbcType=VARCHAR}
-  ) ;
+  )  on  DUPLICATE key update id=#{orderPeopleList.id,jdbcType=INTEGER}
 
 
     </insert>
+
+    <update id="update">
+        UPDATE
+  `order_people_list`
+SET
+  `name` = #{orderPeopleList.name,jdbcType=VARCHAR},
+  `gender` = #{orderPeopleList.gender,jdbcType=INTEGER},
+  `phone` = #{orderPeopleList.phone,jdbcType=VARCHAR},
+  `birthday_time` = #{orderPeopleList.birthdayTime,jdbcType=VARCHAR},
+  `address` = #{orderPeopleList.address,jdbcType=VARCHAR}
+WHERE `id` = #{orderPeopleList.id,jdbcType=INTEGER} ;
+
+    </update>
 </mapper>

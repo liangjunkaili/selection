@@ -13,4 +13,6 @@ public interface OrderPeopleListDao {
     List<OrderPeopleList> findByUid(@Param("uid") Integer uid);
 
     List<OrderPeopleList> findByOid(@Param("oid") Integer oid);
+
+    void update(@Param("orderPeopleList") OrderPeopleList orderPeopleList);
 }
