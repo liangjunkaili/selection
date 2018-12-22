@@ -133,6 +133,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.2.2</version>
 		</dependency>
+		<!-- 以下是关于腾讯云签名涉及到的jar -->
+		<dependency>
+			<groupId>com.qcloud</groupId>
+			<artifactId>cos_api</artifactId>
+			<version>5.4.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>
