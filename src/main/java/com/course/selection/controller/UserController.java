@@ -3,13 +3,11 @@ package com.course.selection.controller;
 import com.course.selection.dto.Result;
 import com.course.selection.enums.ResultEnum;
 import com.course.selection.service.*;
-import com.course.selection.util.COSUtil;
-import com.course.selection.util.HttpUtil;
-import com.course.selection.util.ResultUtil;
-import com.course.selection.util.StringUtil;
+import com.course.selection.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -123,13 +121,14 @@ public class UserController {
         map.put("other",other);
         map.put("type",type);
         try {
-            String str = COSUtil.uploadImage(file.getInputStream(),"/subject/"+timestemp+file.getOriginalFilename());
-            map.put("img",str);
+            String key = timestemp+file.getOriginalFilename();
+            String str = COSUtil.uploadImage(key,file.getInputStream());
+            log.info(str);
+            map.put("img","https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/"+key);
         } catch (Exception e) {
             e.printStackTrace();
         }
         int i = incomeRecordService.addIncomeRecord(map);
-        log.info(i+"--");
         return ResultUtil.success();
     }
 
