@@ -8,6 +8,7 @@
         <result column="other" property="other" jdbcType="VARCHAR"/>
         <result column="regtime" property="regTime" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="queryIncomeRecords" resultMap="incomeRT" parameterType="java.util.Map">
         SELECT
@@ -22,7 +23,7 @@
     </select>
 
     <insert id="addIncomeRecord" parameterType="java.util.Map">
-      INSERT INTO income_record(uid,price,other,regtime,type)
-      VALUES (#{uid},#{price},#{other},#{regTime},#{type});
+      INSERT INTO income_record(uid,price,other,regtime,type,img)
+      VALUES (#{uid},#{price},#{other},#{regTime},#{type},#{img});
     </insert>
 </mapper>

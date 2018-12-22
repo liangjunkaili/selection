@@ -20,4 +20,5 @@ public class IncomeRecord {
     private int price;
     private String other;
     private String regTime;
+    private String img;
 }

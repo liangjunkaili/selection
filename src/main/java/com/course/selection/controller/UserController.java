@@ -3,6 +3,7 @@ package com.course.selection.controller;
 import com.course.selection.dto.Result;
 import com.course.selection.enums.ResultEnum;
 import com.course.selection.service.*;
+import com.course.selection.util.COSUtil;
 import com.course.selection.util.HttpUtil;
 import com.course.selection.util.ResultUtil;
 import com.course.selection.util.StringUtil;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,9 +110,11 @@ public class UserController {
             @RequestParam(value = "price",required = true) Integer price,
 //            @RequestParam(value = "regTime",required = true) String regTime,
             @RequestParam(value = "other",required = true) String other,
-            @RequestParam(value = "type",required = true) Integer type
+            @RequestParam(value = "type",required = true) Integer type,
+            @RequestParam(value = "img",required = true) MultipartFile file
 
     ){
+        long timestemp = new Date().getTime();
         log.info(uid+"|"+price+"|"+other+"|"+type);
         Map<String,Object> map = new HashMap<>();
         map.put("uid",uid);
@@ -117,6 +122,12 @@ public class UserController {
         map.put("regTime", LocalDateTime.now());
         map.put("other",other);
         map.put("type",type);
+        try {
+            String str = COSUtil.uploadImage(file.getInputStream(),"/subject/"+timestemp+file.getOriginalFilename());
+            map.put("img",str);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         int i = incomeRecordService.addIncomeRecord(map);
         log.info(i+"--");
         return ResultUtil.success();
