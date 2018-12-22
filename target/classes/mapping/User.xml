@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.UserDao">
+    <resultMap id="userResultMap" type="com.course.selection.bean.User">
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="open_id" property="openId" jdbcType="VARCHAR"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="reg_time" property="regTime" jdbcType="TIMESTAMP"/>
+        <result column="active_time" property="activeTime" jdbcType="TIMESTAMP"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="country" property="country" jdbcType="VARCHAR"/>
+        <result column="income" property="income" jdbcType="INTEGER"/>
+        <result column="orders" property="orders" jdbcType="INTEGER"/>
+        <result column="poster" property="poster" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="findOneByOpenId" resultMap="userResultMap">
+        select * from `user` where `open_id` = #{openId}
+    </select>
+
+    <update id="update">
+    UPDATE
+`user`
+SET
+  `nickname` = #{nickname},
+  `avatar` = #{avatar},
+  `gender` = #{gender}
+WHERE `uid` = #{uid} ;
+
+
+</update>
+
+    <update id="updateActiveTime">
+        update user
+        set active_time = now() where
+        <foreach collection="uids" item="uid" index="index" separator=" or ">
+            uid = #{uid}
+        </foreach>
+    </update>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="user.uid">
+        INSERT INTO user
+                        (`uid`,
+  `open_id`,
+  `union_id`,
+  `nickname`,
+  `avatar`,
+  `gender`,
+  `reg_time`,
+  `active_time`,
+  `channel`,
+  `ip`,
+  `city`,
+  `province`,
+  `country`,
+  `income`,
+  `orders`,
+  `poster` )
+        VALUES (#{user.uid,jdbcType=INTEGER},
+                #{user.openId,jdbcType=VARCHAR},
+                #{user.unionId,jdbcType=VARCHAR},
+                #{user.nickname,jdbcType=VARCHAR},
+                #{user.avatar,jdbcType=VARCHAR},
+                #{user.gender,jdbcType=INTEGER},
+                #{user.regTime,jdbcType=TIMESTAMP},
+                #{user.activeTime,jdbcType=TIMESTAMP},
+                #{user.channel,jdbcType=VARCHAR},
+                #{user.ip,jdbcType=VARCHAR},
+                #{user.city,jdbcType=VARCHAR},
+                #{user.province,jdbcType=VARCHAR},
+                #{user.country,jdbcType=VARCHAR},
+                #{user.income,jdbcType=INTEGER},
+                #{user.orders,jdbcType=INTEGER},
+                #{user.poster,jdbcType=VARCHAR})
+ on  DUPLICATE key update uid=#{user.uid,jdbcType=INTEGER}
+    </insert>
+</mapper>
