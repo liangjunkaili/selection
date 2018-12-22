@@ -2,10 +2,7 @@ package com.course.selection.controller;
 
 import com.course.selection.dto.Result;
 import com.course.selection.enums.ResultEnum;
-import com.course.selection.service.OrderPeopleListService;
-import com.course.selection.service.OrderService;
-import com.course.selection.service.UserCouponService;
-import com.course.selection.service.UserService;
+import com.course.selection.service.*;
 import com.course.selection.util.HttpUtil;
 import com.course.selection.util.ResultUtil;
 import com.course.selection.util.StringUtil;
@@ -20,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @Log4j2
@@ -35,6 +35,8 @@ public class UserController {
     private OrderService orderService;
     @Autowired
     private OrderPeopleListService orderPeopleListService;
+    @Autowired
+    private IncomeRecordService incomeRecordService;
 
     @ApiOperation("用户登录")
     @PostMapping("login")
@@ -99,4 +101,28 @@ public class UserController {
         return orderPeopleListService.addPeople(oid,name,gender,phone,birthdayTime,address);
     }
 
+    @PostMapping("addIncomeRecord")
+    public Result addIncomeRecord(
+            @RequestParam(value = "uid",required = true) Integer uid,
+            @RequestParam(value = "price",required = true) Integer price,
+//            @RequestParam(value = "regTime",required = true) String regTime,
+            @RequestParam(value = "other",required = true) String other,
+            @RequestParam(value = "type",required = true) Integer type
+
+    ){
+        log.info(uid+"|"+price+"|"+other+"|"+type);
+        Map<String,Object> map = new HashMap<>();
+        map.put("uid",uid);
+        map.put("price",price);
+        map.put("regTime", LocalDateTime.now());
+        map.put("other",other);
+        map.put("type",type);
+        int i = incomeRecordService.addIncomeRecord(map);
+        log.info(i+"--");
+        return ResultUtil.success();
+    }
+
+//    public Result queryIncomeByUid(){
+//
+//    }
 }
