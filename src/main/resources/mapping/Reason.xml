@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.selection.dao.ReasonDao">
+    <resultMap id="reasonRT" type="com.course.selection.bean.Reason">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="reasonRT">
+        select * from `reason`
+    </select>
+
+    <select id="findByOid" resultMap="reasonRT">
+        select * from `reason` where
+                oid = #{oid}
+    </select>
+
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="reason.id">
+        INSERT INTO `reason` (
+  id,reason
+)
+VALUES
+  (
+   #{reason.id,jdbcType=INTEGER},
+   #{reason.reason,jdbcType=VARCHAR} )
+      on  DUPLICATE key update id=#{reason.id,jdbcType=INTEGER}
+
+
+    </insert>
+</mapper>

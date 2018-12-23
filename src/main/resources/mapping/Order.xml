@@ -26,4 +26,45 @@
         select * from `order` where
                 oid = #{oid}
     </select>
+
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="order.oid">
+        INSERT INTO `selection`.`order` (
+  `oid`,
+  `uid`,
+  `gid`,
+  `state`,
+  `num`,
+  `price`,
+  `type1`,
+  `type2`,
+  `img`,
+  `title`
+)
+VALUES
+  (
+   #{order.oid,jdbcType=INTEGER},
+   #{order.uid,jdbcType=INTEGER},
+   #{order.gid,jdbcType=INTEGER},
+   #{order.state,jdbcType=INTEGER},
+   #{order.num,jdbcType=INTEGER},
+   #{order.price,jdbcType=INTEGER},
+   #{order.type1,jdbcType=VARCHAR},
+   #{order.type2,jdbcType=VARCHAR},
+   #{order.img,jdbcType=VARCHAR},
+   #{order.title,jdbcType=VARCHAR} )
+      on  DUPLICATE key update oid=#{order.oid,jdbcType=INTEGER}
+
+
+    </insert>
+
+    <update id="paySuccess">
+        UPDATE order SET
+        state = 1
+        where oid =#{oid}
+    </update>
+    <update id="testSuccess">
+        UPDATE order SET
+        state = 2
+        where oid =#{oid}
+    </update>
 </mapper>

@@ -26,5 +26,50 @@
                 id = #{id}
             </if>
         </where>
+
     </select>
+
+    <select id="queryGoodsById" resultMap="goodsRT">
+        select * from goods where id= #{id}
+    </select>
+
+    <insert id="addGoods"  useGeneratedKeys="true" keyProperty="goods.id">
+INSERT INTO `goods` (
+  `id`,
+  `title`,
+  `detail`,
+  `img1`,
+  `img2`,
+  `img3`,
+  `icard`,
+  `img`,
+  `oprice`,
+  `price`,
+  `label`,
+  `intro`,
+  `bamount`,
+  `flag`,
+  `weight`,
+  num
+)
+VALUES
+  (
+    #{goods.id,jdbcType=INTEGER},
+    #{goods.title,jdbcType=VARCHAR},
+    #{goods.detail,jdbcType=VARCHAR},
+    #{goods.img1,jdbcType=VARCHAR},
+    #{goods.img2,jdbcType=VARCHAR},
+    #{goods.img3,jdbcType=VARCHAR},
+    #{goods.icard,jdbcType=VARCHAR},
+    #{goods.img,jdbcType=VARCHAR},
+    #{goods.oprice,jdbcType=INTEGER},
+    #{goods.price,jdbcType=INTEGER},
+    #{goods.label,jdbcType=VARCHAR},
+    #{goods.intro,jdbcType=VARCHAR},
+    #{goods.bamount,jdbcType=INTEGER},
+    #{goods.flag,jdbcType=INTEGER},
+    #{goods.weight,jdbcType=INTEGER},
+    #{goods.num,jdbcType=INTEGER})
+   on  DUPLICATE key update id=#{goods.id,jdbcType=INTEGER}
+    </insert>
 </mapper>

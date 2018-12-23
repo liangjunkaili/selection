@@ -11,4 +11,10 @@ public interface OrderDao {
     List<Order> findByUid(@Param("uid") Integer uid);
 
     Order findByOid(@Param("oid") Integer oid);
+
+    void insert(@Param("order") Order order);
+
+    void paySuccess(@Param("oid") Integer oid);
+
+    void testSuccess(@Param("oid") Integer oid);
 }

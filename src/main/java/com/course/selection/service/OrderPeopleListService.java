@@ -10,4 +10,11 @@ public interface OrderPeopleListService {
     Result getPeople(Integer oid);
 
     Result updatePeople(Integer id, String name, Integer gender, String phone, String birthdayTime, String address);
+
+    /**
+     * 完成测评
+     * @param id
+     * @return
+     */
+    Result test(Integer id);
 }

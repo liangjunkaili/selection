@@ -10,6 +10,7 @@ import lombok.ToString;
 @Builder
 @ApiModel("首页商品对象")
 public class GoodDto {
+    private Integer id;
     private String title;
     private String img;
     private String label;

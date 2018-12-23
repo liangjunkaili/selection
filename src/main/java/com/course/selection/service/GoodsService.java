@@ -1,6 +1,8 @@
 package com.course.selection.service;
 
 import com.course.selection.bean.Goods;
+import com.course.selection.dto.Result;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -14,4 +16,9 @@ import java.util.Map;
  **/
 public interface GoodsService {
     List<Goods> queryGoods(Map<String,Object> param);
+
+    Result index();
+
+
+    void addGoods(Goods goods);
 }

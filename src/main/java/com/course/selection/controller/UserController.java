@@ -117,38 +117,23 @@ public class UserController {
         return orderPeopleListService.updatePeople(id,name,gender,phone,birthdayTime,address);
     }
 
-    @PostMapping("addIncomeRecord")
-    public Result addIncomeRecord(
-            @RequestParam(value = "uid",required = true) Integer uid,
-            @RequestParam(value = "price",required = true) Integer price,
-//            @RequestParam(value = "regTime",required = true) String regTime,
-            @RequestParam(value = "other",required = true) String other,
-            @RequestParam(value = "type",required = true) Integer type,
-            @RequestParam(value = "img",required = true) MultipartFile file
-
-    ){
-        long timestemp = new Date().getTime();
-        log.info(uid+"|"+price+"|"+other+"|"+type);
-        Map<String,Object> map = new HashMap<>();
-        map.put("uid",uid);
-        map.put("price",price);
-        map.put("regTime", LocalDateTime.now());
-        map.put("other",other);
-        map.put("type",type);
-        try {
-            String key = timestemp+file.getOriginalFilename();
-            String str = CosUtil.uploadImage(key,file.getInputStream());
-            log.info(str);
-            map.put("img","https://qinmi-1258355325.cos.ap-beijing.myqcloud.com/"+key);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int i = incomeRecordService.addIncomeRecord(map);
-        return ResultUtil.success();
-    }
 
 //    public Result queryIncomeByUid(){
 //
 //    }
+
+
+    @PostMapping("orderGoods")
+    @ApiOperation("生成订单")
+    public Result orderGoods(
+            @RequestParam(value = "uid") Integer uid,
+            @RequestParam(value= "gid") Integer gid,
+            @RequestParam(value= "num") Integer num,
+            @RequestParam(value= "price") Integer price,
+            @RequestParam(value= "type1") String type1,
+            @RequestParam(value= "type2") String type2
+    ) {
+        return orderService.orderGoods(uid, gid, num, price, type1, type2);
+    }
 
 }

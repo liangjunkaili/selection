@@ -66,4 +66,8 @@ SET
 WHERE `id` = #{orderPeopleList.id,jdbcType=INTEGER} ;
 
     </update>
+
+    <select id="findById">
+        SELECT * from order_people_list where id =#{id};
+    </select>
 </mapper>

@@ -38,8 +38,4 @@ public class UserDto {
      * 用户海报
      */
     private String poster;
-    /**
-     * 商品展示
-     */
-    private List<GoodDto> goodDtos;
 }

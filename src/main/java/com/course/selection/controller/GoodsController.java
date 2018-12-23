@@ -5,6 +5,7 @@ import com.course.selection.dto.Result;
 import com.course.selection.service.GoodsService;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @RestController
+@RequestMapping("goods")
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
@@ -52,5 +54,10 @@ public class GoodsController {
         String cid = request.getParameter("cid");
         Map<String, Object> map = new HashMap<>();
         return ResultUtil.success(null);
+    }
+
+    @GetMapping("index")
+    public Result index(){
+        return goodsService.index();
     }
 }

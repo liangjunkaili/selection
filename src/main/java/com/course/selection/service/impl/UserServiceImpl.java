@@ -87,19 +87,7 @@ public class UserServiceImpl implements UserService {
             }
             //生成用户token
 //            String token = tokenService.generateToken(user.getUid());
-            //查询首页信息
-            List<Goods> goods = goodsDao.queryGoods(new HashMap<>());
-            List<GoodDto> goodDtos = new ArrayList<>();
-            goods.forEach(good -> {
-                GoodDto goodDto = GoodDto.builder()
-                        .img(good.getImg())
-                        .intro(good.getIntro())
-                        .label(good.getLabel())
-                        .price(good.getPrice())
-                        .title(good.getTitle())
-                        .build();
-                goodDtos.add(goodDto);
-            });
+
             //返回用户信息
             UserDto userDTO = UserDto.builder()
                     .avatar(user.getAvatar())
@@ -108,7 +96,6 @@ public class UserServiceImpl implements UserService {
                     .uid(user.getUid())
                     .income(user.getIncome())
                     .poster(user.getPoster())
-                    .goodDtos(goodDtos)
                     .build();
             return ResultUtil.success(userDTO);
         }
@@ -142,4 +129,7 @@ public class UserServiceImpl implements UserService {
         log.info("loginMap:{}",loginMap);
         return loginMap;
     }
+
+
+
 }

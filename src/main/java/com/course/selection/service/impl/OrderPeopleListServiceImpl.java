@@ -6,6 +6,7 @@ import com.course.selection.dao.OrderDao;
 import com.course.selection.dao.OrderPeopleListDao;
 import com.course.selection.dto.Result;
 import com.course.selection.service.OrderPeopleListService;
+import com.course.selection.service.OrderService;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
     private OrderPeopleListDao orderPeopleListDao;
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public Result getMyPoster(Integer uid) {
@@ -62,4 +65,18 @@ public class OrderPeopleListServiceImpl implements OrderPeopleListService {
         orderPeopleListDao.update(orderPeopleList);
         return ResultUtil.success();
     }
+
+    @Override
+    public Result test(Integer id) {
+        OrderPeopleList orderPeopleList = orderPeopleListDao.findById(id);
+        orderPeopleList.setState(1);
+        orderPeopleListDao.update(orderPeopleList);
+        /**
+         * 查看同一订单下是否都完成测评
+         */
+        Boolean testSuccess = orderService.testSuccess(orderPeopleList.getOid());
+        return ResultUtil.success(testSuccess);
+    }
+
+
 }
