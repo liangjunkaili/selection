@@ -40,7 +40,7 @@ public class CosUtil {
 		InputStream inputStream = file.getInputStream();
 //		File file1 = (File) file;
 		ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(500);
+//        objectMetadata.setContentLength(500);
         objectMetadata.setContentType("image/jpeg");
         PutObjectResult putObjectResult = cosClient.putObject(BUCKETNAME, key, inputStream,objectMetadata);
         String etag = putObjectResult.getETag();
