@@ -21,4 +21,6 @@ public interface GoodsService {
 
 
     void addGoods(Goods goods);
+
+    Result getGoodById(Integer id);
 }

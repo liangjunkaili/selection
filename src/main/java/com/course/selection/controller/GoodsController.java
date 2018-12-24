@@ -2,11 +2,14 @@ package com.course.selection.controller;
 
 import com.course.selection.bean.Goods;
 import com.course.selection.dto.Result;
+import com.course.selection.service.CouponsService;
 import com.course.selection.service.GoodsService;
 import com.course.selection.util.ResultUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +29,8 @@ import java.util.Map;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
-
+    @Autowired
+    private CouponsService couponsService;
     @RequestMapping("getGoods")
     public Result getGoods() {
         Map<String, Object> map = new HashMap<>();
@@ -34,26 +38,24 @@ public class GoodsController {
         return ResultUtil.success(goods);
     }
 
-    @RequestMapping("getGoodById")
-    public Result getGoodById(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        List<Goods> goods = goodsService.queryGoods(map);
-        return ResultUtil.success(goods.get(0));
+    @ApiOperation("获取商品详情")
+    @GetMapping("getGoodById")
+    public Result getGoodById(
+            @RequestParam(value = "id",required = false) Integer id) {
+
+        return goodsService.getGoodById(id);
     }
 
     /**
      * 领取优惠券
-     * @param request
+     * @param
      * @return
      */
-    @RequestMapping("getCoupons")
-    public Result getCoupons(HttpServletRequest request) {
-        String uid = request.getParameter("uid");
-        String cid = request.getParameter("cid");
-        Map<String, Object> map = new HashMap<>();
-        return ResultUtil.success(null);
+    @RequestMapping("receiveCoupons")
+    public Result receiveCoupons(@RequestParam(value = "uid",required = false) Integer uid,
+                                 @RequestParam(value = "cid",required = false) Integer cid) {
+
+        return couponsService.receiveCoupons(uid,cid);
     }
 
     @GetMapping("index")

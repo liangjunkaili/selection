@@ -1,11 +1,12 @@
 package com.course.selection.service.impl;
 
+import com.course.selection.bean.Coupons;
 import com.course.selection.bean.Goods;
+import com.course.selection.bean.Message;
+import com.course.selection.dao.CouponsDao;
 import com.course.selection.dao.GoodsDao;
-import com.course.selection.dto.GoodDto;
-import com.course.selection.dto.ImgDto;
-import com.course.selection.dto.IndexDto;
-import com.course.selection.dto.Result;
+import com.course.selection.dao.MessageDao;
+import com.course.selection.dto.*;
 import com.course.selection.service.GoodsService;
 import com.course.selection.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ import java.util.Map;
 public class GoodsServicImpl implements GoodsService{
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private CouponsDao couponsDao;
+    @Autowired
+    private MessageDao messageDao;
     @Override
     public List<Goods> queryGoods(Map<String, Object> param) {
         return goodsDao.queryGoods(param);
@@ -70,5 +75,18 @@ public class GoodsServicImpl implements GoodsService{
         goodsDao.addGoods(goods);
     }
 
-
+    @Override
+    public Result getGoodById(Integer id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        List<Goods> goods = goodsDao.queryGoods(map);
+        Coupons coupons = couponsDao.findById(goods.get(0).getFlag());
+        List<Message> messages = messageDao.findByGoodId(goods.get(0).getId());
+        GoodDetails goodDetails = GoodDetails.builder()
+                .goods(goods.get(0))
+                .coupons(coupons)
+                .message(messages)
+                .build();
+        return ResultUtil.success(goodDetails);
+    }
 }

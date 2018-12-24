@@ -17,11 +17,11 @@ import lombok.*;
 public class Message {
     private Integer id;
     private Integer goodsId;
-    private Integer img;
-    private Integer content;
-    private Integer name;
-    private Integer time;
-    private Integer reply;
-    private Integer replyTime;
-    private Integer nick;
+    private String img;
+    private String  content;
+    private String name;
+    private String time;
+    private String reply;
+    private String replyTime;
+    private String nick;
 }
