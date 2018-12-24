@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GoodDetails {
-    private Goods goods;
+    private GoodsDto goods;
     private Coupons coupons;
     private List<Message> message;
 }

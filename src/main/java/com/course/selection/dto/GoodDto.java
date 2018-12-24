@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 @Builder
@@ -13,7 +15,7 @@ public class GoodDto {
     private Integer id;
     private String title;
     private String img;
-    private String label;
+    private String[] label;
     private String intro;
     private Integer price;
 }

@@ -1,11 +1,9 @@
 package com.course.selection.service.impl;
 
-import com.course.selection.bean.Goods;
 import com.course.selection.bean.User;
 import com.course.selection.config.App;
 import com.course.selection.dao.GoodsDao;
 import com.course.selection.dao.UserDao;
-import com.course.selection.dto.GoodDto;
 import com.course.selection.dto.Result;
 import com.course.selection.dto.UserDto;
 import com.course.selection.enums.ResultEnum;
@@ -21,9 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,15 +30,16 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     private ObjectMapper objectMapper;
-//    @Autowired
+    //    @Autowired
 //    private TokenService tokenService;
     @Autowired
     private UserDao userDao;
     @Autowired
     private GoodsDao goodsDao;
     private static final String ERR_MSG = "errmsg";
+
     @Override
-    public Result login(String code, String encryptedData, String iv, String channel, String ip, Integer shareId)throws IOException {
+    public Result login(String code, String encryptedData, String iv, String channel, String ip, Integer shareId) throws IOException {
         if (shareId != null) {
             channel = "分享";
         } else {
@@ -59,8 +56,8 @@ public class UserServiceImpl implements UserService {
             }
             //查询该用户是否存在
             User user = userDao.findOneByOpenId(openId);
-            log.info("iv:{}",iv);
-            if(iv!=null&&iv!=""){
+            log.info("iv:{}", iv);
+            if (iv != null && iv != "") {
                 //解密数据
                 String userData = AESUtil.aesDecryptByBytes(encryptedData.replaceAll(StringUtil.BLANK_TEXT, StringUtil.PLUS),
                         sessionKey.replaceAll(StringUtil.BLANK_TEXT, StringUtil.PLUS),
@@ -75,7 +72,7 @@ public class UserServiceImpl implements UserService {
                 //数据库插入一条新数据
                 user = buildUser(userMap, channel, ip, shareId);
                 userDao.insert(user);
-            }else {
+            } else {
                 log.info("avatarUrl:{}", String.valueOf(userMap.get("avatarUrl")));
                 log.info("nickName:{}", String.valueOf(userMap.get("nickName")));
                 log.info("gender:{}", String.valueOf(userMap.get("gender")));
@@ -120,16 +117,16 @@ public class UserServiceImpl implements UserService {
                 .poster("null")
                 .build();
     }
+
     private Map<String, String> loginMap(String code) {
         Map<String, String> loginMap = new HashMap<>(4);
         loginMap.put("appid", App.APP_ID);
         loginMap.put("secret", App.APP_SECRET);
         loginMap.put("js_code", code);
         loginMap.put("grant_type", "authorization_code");
-        log.info("loginMap:{}",loginMap);
+        log.info("loginMap:{}", loginMap);
         return loginMap;
     }
-
 
 
 }

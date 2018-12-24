@@ -53,10 +53,12 @@ public class GoodsServicImpl implements GoodsService{
                         .build();
                 imgDtos.add(imgDto);
             }
+            String[] split = good.getLabel().split("\\|");
+
             GoodDto goodDto = GoodDto.builder()
                     .img(good.getImg())
                     .intro(good.getIntro())
-                    .label(good.getLabel())
+                    .label(split)
                     .price(good.getPrice())
                     .title(good.getTitle())
                     .id(good.getId())
@@ -82,8 +84,28 @@ public class GoodsServicImpl implements GoodsService{
         List<Goods> goods = goodsDao.queryGoods(map);
         Coupons coupons = couponsDao.findById(goods.get(0).getFlag());
         List<Message> messages = messageDao.findByGoodId(goods.get(0).getId());
+        Goods good = goods.get(0);
+        String[] split = good.getLabel().split("\\|");
+        GoodsDto goodsDto = GoodsDto.builder()
+                .bamount(good.getBamount())
+                .detail(good.getDetail())
+                .flag(good.getFlag())
+                .icard(good.getIcard())
+                .img(good.getImg())
+                .img1(good.getImg1())
+                .img2(good.getImg2())
+                .img3(good.getImg3())
+                .intro(good.getIntro())
+                .id(good.getId())
+                .label(split)
+                .num(good.getNum())
+                .weight(good.getWeight())
+                .title(good.getTitle())
+                .oprice(good.getOprice())
+                .price(good.getPrice())
+                .build();
         GoodDetails goodDetails = GoodDetails.builder()
-                .goods(goods.get(0))
+                .goods(goodsDto)
                 .coupons(coupons)
                 .message(messages)
                 .build();
